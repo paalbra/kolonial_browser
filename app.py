@@ -2,6 +2,7 @@ from flask import Flask, jsonify
 import configparser
 
 from kolonial_api import KolonialAPI
+from mongo_kolonial import MongoKolonial
 
 app = Flask(__name__)
 
@@ -13,6 +14,7 @@ user_agent = config["api"]["useragent"]
 api_url = config["api"]["url"]
 
 api = KolonialAPI(api_url, token, user_agent)
+mongo_kolonial = MongoKolonial("kolonial", "products")
 
 @app.route("/api/products/<int:product_id>")
 def get_product(product_id):
@@ -33,4 +35,9 @@ def get_wildcard(path):
         return (jsonify(response.json()), response.status_code)
     else:
         return (response.text, response.status_code)
+
+@app.route("/products/")
+def get_products():
+    products = mongo_kolonial.get_products()
+    return jsonify(products)
 
