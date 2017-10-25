@@ -39,7 +39,7 @@ class KolonialAPI(object):
 
         :param product_id: The ID of the product.
         """
-        response = self.get_response_from_path("/products/%d" % product_id)
+        response = self.get_response_from_path("/products/%d/" % product_id)
 
         if response.status_code == 404:
             return None
