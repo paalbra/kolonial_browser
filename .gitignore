@@ -1,4 +1,5 @@
 config.ini
+product_saver.log
 __pycache__
 *.pyc
 venv/
