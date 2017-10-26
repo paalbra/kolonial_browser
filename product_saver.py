@@ -34,7 +34,7 @@ if current_padding is None:
         logging.debug("We have no products. Get the first one.")
         product = api.get_product(1)
         if not product:
-            product = {"id": next_id}
+            product = {"id": 1}
         mongo_kolonial.infresh_product(product)
     else:
         logging.debug("Current max is found. Get the next.")
