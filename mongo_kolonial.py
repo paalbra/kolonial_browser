@@ -1,7 +1,9 @@
-import pymongo
-from bson.son import SON
+import logging
 from datetime import datetime
 from pprint import pprint
+
+import pymongo
+from bson.son import SON
 
 def pop_underscore(document):
     # TODO Wow. Such ugly(?)
@@ -102,16 +104,17 @@ class MongoKolonial(object):
             current_object_id = current_product["_id"]
             pop_underscore(current_product)
             if current_product == product:
-                print("Product is the same as before")
+                logging.info("Refreshing refresh time on unchanged product: {}".format(product["id"]))
                 self._collection.update({"_id": current_object_id}, {"$set": {"_refreshed_time": datetime.utcnow()}})
             else:
-                print("Product has changed")
+                logging.info("Refreshing product with changes: {}".format(product["id"]))
                 now = datetime.utcnow()
                 product["_inserted_time"] = now
                 product["_refreshed_time"] = now
                 self._collection.insert(product)
         else:
             # This is a new product
+            logging.info("Inserting new product: {}".format(product["id"]))
             now = datetime.utcnow()
             product["_inserted_time"] = now
             product["_refreshed_time"] = now
