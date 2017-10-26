@@ -16,6 +16,7 @@ api_url = config["api"]["url"]
 api = KolonialAPI(api_url, token, user_agent)
 mongo_kolonial = MongoKolonial("kolonial", "products")
 
+
 @app.route("/api/products/<int:product_id>")
 def get_product(product_id):
     product = api.get_product(product_id)
@@ -24,9 +25,11 @@ def get_product(product_id):
     else:
         return (jsonify({"error": "The product does not exist!"}), 404)
 
+
 @app.route("/api/search/<query>")
 def get_search(query):
     return jsonify(api.get_search(query))
+
 
 @app.route("/api/*/<path:path>")
 def get_wildcard(path):
@@ -36,8 +39,8 @@ def get_wildcard(path):
     else:
         return (response.text, response.status_code)
 
+
 @app.route("/products/")
 def get_products():
     products = mongo_kolonial.get_products()
     return jsonify(products)
-

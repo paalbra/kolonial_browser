@@ -1,8 +1,5 @@
-from datetime import datetime
 import configparser
 import logging
-
-import pymongo
 
 from kolonial_api import KolonialAPI
 from mongo_kolonial import MongoKolonial
@@ -68,4 +65,3 @@ else:
         else:
             logging.info("Refresh with product: {}".format(new_product["id"]))
         mongo_kolonial.infresh_product(new_product)
-

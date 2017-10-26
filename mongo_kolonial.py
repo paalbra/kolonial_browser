@@ -1,15 +1,16 @@
 import logging
 from datetime import datetime
-from pprint import pprint
 
 import pymongo
 from bson.son import SON
+
 
 def pop_underscore(document):
     # TODO Wow. Such ugly(?)
     document.pop("_id", None)
     document.pop("_inserted_time", None)
     document.pop("_refreshed_time", None)
+
 
 class MongoKolonial(object):
     """
@@ -119,4 +120,3 @@ class MongoKolonial(object):
             product["_inserted_time"] = now
             product["_refreshed_time"] = now
             self._collection.insert(product)
-

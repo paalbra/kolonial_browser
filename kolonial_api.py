@@ -1,5 +1,6 @@
 import requests
 
+
 class KolonialAPI(object):
     """
     A class that simplifies requesting stuff from the Kolonial.no API:
@@ -16,11 +17,12 @@ class KolonialAPI(object):
         """
         self._api_url = api_url
 
-        self._api_headers = {"user-agent": user_agent,
-                             "content-type": "application/json",
-                             "accept": "application/json",
-                             "x-client-token": token
-                            }
+        self._api_headers = {
+            "user-agent": user_agent,
+            "content-type": "application/json",
+            "accept": "application/json",
+            "x-client-token": token
+        }
 
     def ping(self):
         """
@@ -59,7 +61,6 @@ class KolonialAPI(object):
 
         return response.json()
 
-
     def get_response_from_path(self, path):
         """
         Perform a HTTP request against the API.
@@ -73,4 +74,3 @@ class KolonialAPI(object):
             response.raise_for_status()
 
         return response
-
