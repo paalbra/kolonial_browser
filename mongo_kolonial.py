@@ -35,7 +35,7 @@ class MongoKolonial(object):
         sort = {"$sort": SON([("id", pymongo.ASCENDING), ("_inserted_time", pymongo.DESCENDING)])}
         group = {"$group": {"_id": "$id", "doc": {"$first": "$$ROOT"}, "count": {"$sum": 1}}}
         match = {"$match": {"doc.name": {"$exists": True}}}
-        cursor = self._collection.aggregate([sort, group, match])
+        cursor = self._collection.aggregate([sort, group, match], allowDiskUse=True)
 
         docs = [e["doc"] for e in cursor]
 
