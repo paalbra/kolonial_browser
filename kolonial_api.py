@@ -35,18 +35,26 @@ class KolonialAPI(object):
             return False
         return True
 
-    def get_product(self, product_id):
+    def get_product(self, product_id, filter_html=True):
         """
         Get a single product from the API. A nonexistent product will return None.
 
         :param product_id: The ID of the product.
+        :param filter_html: Filters all HTML properties if set to True.
         """
         response = self.get_response_from_path("/products/%d/" % product_id)
 
         if response.status_code == 404:
             return None
 
-        return response.json()
+        product = response.json()
+
+        if filter_html:
+            keys = [key for key in product.keys() if key.endswith("_html")]
+            for key in keys:
+                product.pop(key)
+
+        return product
 
     def get_search(self, query):
         """
